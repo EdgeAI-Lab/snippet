@@ -3,6 +3,9 @@
 int minBufSize = AudioRecord.getMinBufferSize(SAMPLE_RATE,
                     AudioFormat.CHANNEL_IN_MONO ,
                     AudioFormat.ENCODING_PCM_16BIT);
+// init audio record
+audioRecord = new AudioRecord(src,
+						SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, buffer_size);
 
 // init audio track for play audio
 track = new AudioTrack(AudioManager.STREAM_SYSTEM,
@@ -11,6 +14,12 @@ track = new AudioTrack(AudioManager.STREAM_SYSTEM,
                   AudioFormat.ENCODING_PCM_16BIT,
                   minBufSize,
                   AudioTrack.MODE_STREAM);
+
+// start record from MIC
+audioRecord.startRecording();
+
+// play audio
+track.play();
  
 // get PCM data from mic
 int size = recorder.read(audioBuf,0,audioBuf.length);
